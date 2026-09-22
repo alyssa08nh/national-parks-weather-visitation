@@ -1,0 +1,72 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Field Notes",
+    "section": "",
+    "text": "A decade in the wild · 2007—2016\n\n\n\nThousands of monthly visits to 60 US national parks, set beside the temperatures and precipitation that shape a day outside. Explore the broad pattern, then step inside one park at a time.\n\n\n7,176park-month observations\n\n\n54national parks\n\n\n2007–2016years covered"
+  },
+  {
+    "objectID": "index.html#the-national-picture",
+    "href": "index.html#the-national-picture",
+    "title": "Field Notes",
+    "section": "The national picture",
+    "text": "The national picture\nEach point is one park-month. The warm band is busy: visitation rises as outdoor conditions become more comfortable, but the relationship is not a straight line. Desert parks often trade summer heat for winter crowds, while high-latitude parks compress their season into a few bright months.\n\n\nCode\noverview &lt;- parks |&gt;\n  mutate(year = factor(year))\n\nplot_ly(\n  overview,\n  x = ~average_temperature_f,\n  y = ~visitor_count,\n  type = \"scatter\",\n  mode = \"markers\",\n  color = ~year,\n  colors = \"YlOrRd\",\n  size = ~precipitation_in,\n  sizes = c(6, 28),\n  opacity = .55,\n  text = ~paste(park_name, month_name, year, sep = \" · \"),\n  hovertemplate = \"%{text}&lt;br&gt;%{x:.0f}°F · %{y:,.0f} visits&lt;extra&gt;&lt;/extra&gt;\"\n) |&gt;\n  layout(\n    xaxis = list(title = \"Average monthly temperature (°F)\", zeroline = FALSE),\n    yaxis = list(title = \"Monthly visitor count\", tickformat = \",\"),\n    legend = list(title = list(text = \"Year\"))\n  )\n\n\nWarning: Ignoring 5976 observations\n\n\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\nWarning: `line.width` does not currently support multiple values.\n\n\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\nWarning in RColorBrewer::brewer.pal(n, pal): n too large, allowed maximum for palette YlOrRd is 9\nReturning the palette you asked for with that many colors\n\n\n\n\n\n\n\n\nFigure 1: Monthly visitors and average temperature across the park network. Point size reflects precipitation.\n\n\n\n\n\n\n\n\n\n\nRead the shape, not just the average. Weather helps set the stage, but access, wildfire, road closures, school calendars, and park size also determine who can show up."
+  },
+  {
+    "objectID": "index.html#start-exploring",
+    "href": "index.html#start-exploring",
+    "title": "Field Notes",
+    "section": "Start exploring",
+    "text": "Start exploring\nUse the Exploration tab to select an individual park, zoom into a time period, and compare its visitor curve with local temperature and precipitation. The Story follows one focused question: why do northern and desert parks peak in opposite seasons?\n\nData note: annual visitation totals come from the National Park Service Stats archive via TidyTuesday. Monthly counts and weather values are a reproducible teaching approximation derived from annual totals and regional climate profiles; see the data-preparation script for the method."
+  },
+  {
+    "objectID": "exploration.html",
+    "href": "exploration.html",
+    "title": "Exploration",
+    "section": "",
+    "text": "Interactive data tool\n\n\n\nThe dropdown changes the visible traces; the built-in range slider lets you focus on a particular stretch of the decade. Hover over a line to inspect individual months."
+  },
+  {
+    "objectID": "exploration.html#visitors-over-time",
+    "href": "exploration.html#visitors-over-time",
+    "title": "Exploration",
+    "section": "Visitors over time",
+    "text": "Visitors over time\n\n\nCode\nvisitor_buttons &lt;- map(park_names, function(park) {\n  list(method = \"update\", args = list(list(visible = park_names == park), list(title = park)), label = park)\n})\n\nvisitor_plot &lt;- plot_ly()\nfor (park in park_names) {\n  current &lt;- filter(parks, park_name == park)\n  visitor_plot &lt;- add_trace(visitor_plot, data = current, x = ~date, y = ~visitor_count,\n    type = \"scatter\", mode = \"lines\", name = park, visible = park == default_park,\n    line = list(color = \"#d6674d\", width = 2.5),\n    hovertemplate = \"%{x|%b %Y}&lt;br&gt;%{y:,.0f} visitors&lt;extra&gt;&lt;/extra&gt;\")\n}\nvisitor_plot |&gt;\n  layout(\n    title = list(text = default_park),\n    xaxis = list(title = NULL, rangeslider = list(visible = TRUE)),\n    yaxis = list(title = \"Monthly visitors\", tickformat = \",\"),\n    updatemenus = list(list(type = \"dropdown\", active = which(park_names == default_park) - 1, buttons = visitor_buttons, x = 0, y = 1.16, xanchor = \"left\")),\n    showlegend = FALSE\n  )\n\n\n\n\n\n\n\n\nFigure 1"
+  },
+  {
+    "objectID": "exploration.html#weather-alongside-the-crowds",
+    "href": "exploration.html#weather-alongside-the-crowds",
+    "title": "Exploration",
+    "section": "Weather alongside the crowds",
+    "text": "Weather alongside the crowds\n\n\nCode\nweather_buttons &lt;- map(park_names, function(park) {\n  visible &lt;- rep(FALSE, length(park_names) * 2)\n  visible[(match(park, park_names) * 2) - 1:0] &lt;- TRUE\n  list(method = \"update\", args = list(list(visible = visible), list(title = park)), label = park)\n})\n\nweather_plot &lt;- plot_ly()\nfor (park in park_names) {\n  current &lt;- filter(parks, park_name == park)\n  weather_plot &lt;- add_trace(weather_plot, data = current, x = ~date, y = ~average_temperature_f,\n    type = \"scatter\", mode = \"lines\", name = \"Temperature\", visible = park == default_park,\n    line = list(color = \"#e7a24b\", width = 2.5), hovertemplate = \"%{x|%b %Y}&lt;br&gt;%{y:.0f}°F&lt;extra&gt;&lt;/extra&gt;\")\n  weather_plot &lt;- add_trace(weather_plot, data = current, x = ~date, y = ~precipitation_in,\n    type = \"bar\", name = \"Precipitation\", visible = park == default_park,\n    marker = list(color = \"#8da99a\"), hovertemplate = \"%{x|%b %Y}&lt;br&gt;%{y:.1f} in&lt;extra&gt;&lt;/extra&gt;\")\n}\nweather_plot |&gt;\n  layout(\n    title = list(text = default_park),\n    xaxis = list(title = NULL, rangeslider = list(visible = TRUE)),\n    yaxis = list(title = \"Temperature (°F) / precipitation (in)\"),\n    barmode = \"overlay\",\n    updatemenus = list(list(type = \"dropdown\", active = which(park_names == default_park) - 1, buttons = weather_buttons, x = 0, y = 1.16, xanchor = \"left\")),\n    legend = list(orientation = \"h\", y = 1.08)\n  )\n\n\n\n\n\n\n\n\nFigure 2\n\n\n\n\n\nThe park selector is embedded in each chart so it works on a static site without a Shiny server."
+  },
+  {
+    "objectID": "story.html",
+    "href": "story.html",
+    "title": "Story",
+    "section": "",
+    "text": "A seasonal field note\n\n\n\nThere is no single national park season. In the north, winter closes the door and summer opens it. In the desert, summer heat does the opposite: the comfortable months arrive after the crowds have gone."
+  },
+  {
+    "objectID": "story.html#summer-is-not-one-thing",
+    "href": "story.html#summer-is-not-one-thing",
+    "title": "Story",
+    "section": "01 / Summer is not one thing",
+    "text": "01 / Summer is not one thing\n\n\nCode\nstory_parks &lt;- c(\"Glacier\", \"Acadia\", \"Death Valley\", \"Zion\")\nseasonal &lt;- parks |&gt;\n  filter(park_name %in% story_parks) |&gt;\n  mutate(season = if_else(month %in% 6:8, \"Summer\", \"Winter\")) |&gt;\n  group_by(park_name, season) |&gt;\n  summarise(visitors = sum(visitor_count), .groups = \"drop\") |&gt;\n  mutate(park_name = forcats::fct_reorder(park_name, visitors, .fun = sum))\n\nggplot(seasonal, aes(park_name, visitors, fill = season)) +\n  geom_col(position = \"dodge\", width = .7) +\n  scale_fill_manual(values = c(\"Summer\" = \"#d6674d\", \"Winter\" = \"#8da99a\")) +\n  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = \"M\")) +\n  labs(x = NULL, y = \"Visitors (millions)\", fill = NULL) +\n  theme_minimal(base_family = \"Manrope\") +\n  theme(panel.grid.minor = element_blank(), legend.position = \"top\")\n\n\n\n\n\n\n\n\nFigure 1: Estimated summer and winter visitor totals for two northern and two desert parks.\n\n\n\n\n\nGlacier and Acadia concentrate their welcome into warm months. Zion and Death Valley spread their opportunity differently: heat changes the timing of a visit, rather than erasing demand altogether. A national average would flatten this useful contrast."
+  },
+  {
+    "objectID": "story.html#peaks-are-weather-shaped",
+    "href": "story.html#peaks-are-weather-shaped",
+    "title": "Story",
+    "section": "02 / Peaks are weather-shaped",
+    "text": "02 / Peaks are weather-shaped\n\n\nCode\nevents &lt;- parks |&gt;\n  filter(park_name %in% c(\"Glacier\", \"Death Valley\")) |&gt;\n  group_by(park_name, month_name, month) |&gt;\n  summarise(visitors = sum(visitor_count), temperature = mean(average_temperature_f), .groups = \"drop\")\n\nggplot(events, aes(month, visitors, color = park_name)) +\n  geom_line(linewidth = 1.2) + geom_point(size = 2) +\n  scale_x_continuous(breaks = 1:12, labels = month.abb) +\n  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = \"M\")) +\n  scale_color_manual(values = c(\"Glacier\" = \"#d6674d\", \"Death Valley\" = \"#e7a24b\")) +\n  labs(x = NULL, y = \"Monthly visitors (millions)\", color = NULL) +\n  theme_minimal(base_family = \"Manrope\") +\n  theme(panel.grid.minor = element_blank(), legend.position = \"top\")\n\n\n\n\n\n\n\n\nFigure 2: Visitor counts and temperature profiles for Glacier and Death Valley.\n\n\n\n\n\nThe curves are mirror images because the operational seasons are mirror images. Snowpack, road access, heat exposure, and daylight all turn a temperature reading into a practical decision: when can visitors arrive, move through the landscape, and stay comfortable long enough to explore?"
+  },
+  {
+    "objectID": "story.html#a-picture-of-the-shoulder-season",
+    "href": "story.html#a-picture-of-the-shoulder-season",
+    "title": "Story",
+    "section": "A picture of the shoulder season",
+    "text": "A picture of the shoulder season\n\n\n\n\n\nA mountain landscape in a cool-season light.\n\n\n\n\n\n\nA warm desert landscape under open sky.\n\n\n\n\n\nInterpretation: these visuals use modeled monthly weather profiles, not event-level NOAA observations. They are best read as a clear demonstration of the seasonal mechanism, not as a causal estimate of weather’s independent effect."
+  }
+]
