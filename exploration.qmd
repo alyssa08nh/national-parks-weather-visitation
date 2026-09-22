@@ -1,0 +1,80 @@
+---
+title: "Exploration"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(plotly)
+parks <- read_csv("data/park_weather_monthly.csv", show_col_types = FALSE)
+park_names <- sort(unique(parks$park_name))
+default_park <- "Great Smoky Mountains"
+if (!default_park %in% park_names) default_park <- park_names[[1]]
+```
+
+<div class="hero">
+<div class="hero-kicker">Interactive data tool</div>
+
+# Choose a park. Find its season.
+
+The dropdown changes the visible traces; the built-in range slider lets you focus on a particular stretch of the decade. Hover over a line to inspect individual months.
+</div>
+
+## Visitors over time
+
+```{r}
+#| label: fig-park-visitors
+visitor_buttons <- map(park_names, function(park) {
+  list(method = "update", args = list(list(visible = park_names == park), list(title = park)), label = park)
+})
+
+visitor_plot <- plot_ly()
+for (park in park_names) {
+  current <- filter(parks, park_name == park)
+  visitor_plot <- add_trace(visitor_plot, data = current, x = ~date, y = ~visitor_count,
+    type = "scatter", mode = "lines", name = park, visible = park == default_park,
+    line = list(color = "#d6674d", width = 2.5),
+    hovertemplate = "%{x|%b %Y}<br>%{y:,.0f} visitors<extra></extra>")
+}
+visitor_plot |>
+  layout(
+    title = list(text = default_park),
+    xaxis = list(title = NULL, rangeslider = list(visible = TRUE)),
+    yaxis = list(title = "Monthly visitors", tickformat = ","),
+    updatemenus = list(list(type = "dropdown", active = which(park_names == default_park) - 1, buttons = visitor_buttons, x = 0, y = 1.16, xanchor = "left")),
+    showlegend = FALSE
+  )
+```
+
+## Weather alongside the crowds
+
+```{r}
+#| label: fig-park-weather
+weather_buttons <- map(park_names, function(park) {
+  visible <- rep(FALSE, length(park_names) * 2)
+  visible[(match(park, park_names) * 2) - 1:0] <- TRUE
+  list(method = "update", args = list(list(visible = visible), list(title = park)), label = park)
+})
+
+weather_plot <- plot_ly()
+for (park in park_names) {
+  current <- filter(parks, park_name == park)
+  weather_plot <- add_trace(weather_plot, data = current, x = ~date, y = ~average_temperature_f,
+    type = "scatter", mode = "lines", name = "Temperature", visible = park == default_park,
+    line = list(color = "#e7a24b", width = 2.5), hovertemplate = "%{x|%b %Y}<br>%{y:.0f}°F<extra></extra>")
+  weather_plot <- add_trace(weather_plot, data = current, x = ~date, y = ~precipitation_in,
+    type = "bar", name = "Precipitation", visible = park == default_park,
+    marker = list(color = "#8da99a"), hovertemplate = "%{x|%b %Y}<br>%{y:.1f} in<extra></extra>")
+}
+weather_plot |>
+  layout(
+    title = list(text = default_park),
+    xaxis = list(title = NULL, rangeslider = list(visible = TRUE)),
+    yaxis = list(title = "Temperature (°F) / precipitation (in)"),
+    barmode = "overlay",
+    updatemenus = list(list(type = "dropdown", active = which(park_names == default_park) - 1, buttons = weather_buttons, x = 0, y = 1.16, xanchor = "left")),
+    legend = list(orientation = "h", y = 1.08)
+  )
+```
+
+<p class="source-note">The park selector is embedded in each chart so it works on a static site without a Shiny server.</p>

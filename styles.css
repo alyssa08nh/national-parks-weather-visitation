@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap');
+
+/*-- scss:rules --*/
+
+:root {
+  --ink: #132d2b;
+  --paper: #f8f4e9;
+  --warm: #e7a24b;
+  --coral: #d6674d;
+  --sage: #8da99a;
+  --line: #d5d2c6;
+}
+
+body { background: var(--paper); color: var(--ink); font-family: 'Manrope', sans-serif; }
+h1, h2, h3 { font-weight: 800; letter-spacing: 0; }
+h1 { font-size: clamp(2.8rem, 7vw, 6.8rem); line-height: .95; max-width: 900px; }
+h2 { font-size: 2rem; margin-top: 3rem; }
+p { max-width: 760px; line-height: 1.7; }
+.navbar-brand { font-weight: 800; letter-spacing: .02em; }
+.navbar { border-bottom: 1px solid rgba(248,244,233,.18); }
+.hero { padding: 5rem 0 3rem; }
+.hero-kicker, .eyebrow { color: var(--coral); font: 500 .78rem 'DM Mono', monospace; letter-spacing: .12em; text-transform: uppercase; }
+.hero p { font-size: 1.1rem; }
+.metric-row { display: flex; gap: 3rem; border-top: 1px solid var(--line); padding-top: 1.5rem; margin: 2rem 0 1rem; flex-wrap: wrap; }
+.metric strong { display: block; font-size: 2rem; }
+.metric span { color: #55706b; font: .74rem 'DM Mono', monospace; text-transform: uppercase; }
+.callout { border-left: 4px solid var(--warm); padding: 1rem 1.25rem; background: rgba(231,162,75,.12); margin: 1.5rem 0; }
+.source-note { color: #55706b; font-size: .82rem; }
+.plotly, .html-widget { border: 1px solid var(--line); background: rgba(255,255,255,.3); }
+.quarto-title-block { display: none; }
+footer { margin-top: 5rem; }
+@media (max-width: 700px) { .hero { padding: 3rem 0 1rem; } .metric-row { gap: 1.5rem; } }

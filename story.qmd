@@ -1,0 +1,77 @@
+---
+title: "Story"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(plotly)
+parks <- read_csv("data/park_weather_monthly.csv", show_col_types = FALSE)
+```
+
+<div class="hero">
+<div class="hero-kicker">A seasonal field note</div>
+
+# The sweet spot moves with the map
+
+There is no single national park season. In the north, winter closes the door and summer opens it. In the desert, summer heat does the opposite: the comfortable months arrive after the crowds have gone.
+</div>
+
+## 01 / Summer is not one thing
+
+```{r}
+#| label: fig-season-contrast
+#| fig-cap: "Estimated summer and winter visitor totals for two northern and two desert parks."
+story_parks <- c("Glacier", "Acadia", "Death Valley", "Zion")
+seasonal <- parks |>
+  filter(park_name %in% story_parks) |>
+  mutate(season = if_else(month %in% 6:8, "Summer", "Winter")) |>
+  group_by(park_name, season) |>
+  summarise(visitors = sum(visitor_count), .groups = "drop") |>
+  mutate(park_name = forcats::fct_reorder(park_name, visitors, .fun = sum))
+
+ggplot(seasonal, aes(park_name, visitors, fill = season)) +
+  geom_col(position = "dodge", width = .7) +
+  scale_fill_manual(values = c("Summer" = "#d6674d", "Winter" = "#8da99a")) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  labs(x = NULL, y = "Visitors (millions)", fill = NULL) +
+  theme_minimal(base_family = "Manrope") +
+  theme(panel.grid.minor = element_blank(), legend.position = "top")
+```
+
+Glacier and Acadia concentrate their welcome into warm months. Zion and Death Valley spread their opportunity differently: heat changes the timing of a visit, rather than erasing demand altogether. A national average would flatten this useful contrast.
+
+## 02 / Peaks are weather-shaped
+
+```{r}
+#| label: fig-weather-shifts
+#| fig-cap: "Visitor counts and temperature profiles for Glacier and Death Valley."
+events <- parks |>
+  filter(park_name %in% c("Glacier", "Death Valley")) |>
+  group_by(park_name, month_name, month) |>
+  summarise(visitors = sum(visitor_count), temperature = mean(average_temperature_f), .groups = "drop")
+
+ggplot(events, aes(month, visitors, color = park_name)) +
+  geom_line(linewidth = 1.2) + geom_point(size = 2) +
+  scale_x_continuous(breaks = 1:12, labels = month.abb) +
+  scale_y_continuous(labels = scales::label_number(scale = 1e-6, suffix = "M")) +
+  scale_color_manual(values = c("Glacier" = "#d6674d", "Death Valley" = "#e7a24b")) +
+  labs(x = NULL, y = "Monthly visitors (millions)", color = NULL) +
+  theme_minimal(base_family = "Manrope") +
+  theme(panel.grid.minor = element_blank(), legend.position = "top")
+```
+
+The curves are mirror images because the operational seasons are mirror images. Snowpack, road access, heat exposure, and daylight all turn a temperature reading into a practical decision: when can visitors arrive, move through the landscape, and stay comfortable long enough to explore?
+
+## A picture of the shoulder season
+
+::: {.columns}
+::: {.column width="50%"}
+![A mountain landscape in a cool-season light.](https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1200&q=80)
+:::
+::: {.column width="50%"}
+![A warm desert landscape under open sky.](https://images.unsplash.com/photo-1474044159687-1ee9f3a51722?auto=format&fit=crop&w=1200&q=80)
+:::
+:::
+
+<p class="source-note">Interpretation: these visuals use modeled monthly weather profiles, not event-level NOAA observations. They are best read as a clear demonstration of the seasonal mechanism, not as a causal estimate of weather's independent effect.</p>

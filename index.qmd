@@ -1,0 +1,65 @@
+---
+title: "Field Notes"
+---
+
+```{r}
+#| include: false
+library(tidyverse)
+library(plotly)
+parks <- read_csv("data/park_weather_monthly.csv", show_col_types = FALSE)
+```
+
+::: {.hero}
+<div class="hero-kicker">A decade in the wild · 2007—2016</div>
+
+# When the forecast becomes part of the itinerary
+
+Thousands of monthly visits to 60 US national parks, set beside the temperatures and precipitation that shape a day outside. Explore the broad pattern, then step inside one park at a time.
+
+::: {.metric-row}
+<div class="metric"><strong>`r scales::comma(nrow(parks))`</strong><span>park-month observations</span></div>
+<div class="metric"><strong>`r n_distinct(parks$park_name)`</strong><span>national parks</span></div>
+<div class="metric"><strong>`r min(parks$year)`–`r max(parks$year)`</strong><span>years covered</span></div>
+:::
+:::
+
+## The national picture
+
+Each point is one park-month. The warm band is busy: visitation rises as outdoor conditions become more comfortable, but the relationship is not a straight line. Desert parks often trade summer heat for winter crowds, while high-latitude parks compress their season into a few bright months.
+
+```{r}
+#| label: fig-overview
+#| fig-cap: "Monthly visitors and average temperature across the park network. Point size reflects precipitation."
+overview <- parks |>
+  mutate(year = factor(year))
+
+plot_ly(
+  overview,
+  x = ~average_temperature_f,
+  y = ~visitor_count,
+  type = "scatter",
+  mode = "markers",
+  color = ~year,
+  colors = "YlOrRd",
+  size = ~precipitation_in,
+  sizes = c(6, 28),
+  opacity = .55,
+  text = ~paste(park_name, month_name, year, sep = " · "),
+  hovertemplate = "%{text}<br>%{x:.0f}°F · %{y:,.0f} visits<extra></extra>"
+) |>
+  layout(
+    xaxis = list(title = "Average monthly temperature (°F)", zeroline = FALSE),
+    yaxis = list(title = "Monthly visitor count", tickformat = ","),
+    legend = list(title = list(text = "Year"))
+  )
+```
+
+::: {.callout}
+**Read the shape, not just the average.** Weather helps set the stage, but access, wildfire, road closures, school calendars, and park size also determine who can show up.
+:::
+
+## Start exploring
+
+Use the [Exploration](exploration.qmd) tab to select an individual park, zoom into a time period, and compare its visitor curve with local temperature and precipitation. The [Story](story.qmd) follows one focused question: why do northern and desert parks peak in opposite seasons?
+
+<p class="source-note">Data note: annual visitation totals come from the National Park Service Stats archive via TidyTuesday. Monthly counts and weather values are a reproducible teaching approximation derived from annual totals and regional climate profiles; see the data-preparation script for the method.</p>
